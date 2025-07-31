@@ -1,4 +1,5 @@
 import os
+import traceback
 
 from pytubefix import YouTube, Stream
 from pytubefix.cli import on_progress
@@ -86,7 +87,7 @@ for i, url in enumerate(urls):
 
         except Exception as e:
             print(f"{try_nums + 1} 번째 시도 실패")
-            print(e)
+            traceback.print_exc()
 
         if is_complete: break
 
