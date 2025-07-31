@@ -9,8 +9,6 @@ from datetime import timedelta
 
 from config import urls
 
-print(urls)
-
 def get_resolution(stream: Stream) -> int:
     if not stream.resolution:
         return 0
@@ -39,6 +37,11 @@ def merge_video_audio(video_path, audio_path, output_path):
         # .global_args('-loglevel', 'quiet')
         .run()
     )
+
+print(urls)
+
+os.makedirs("downloads/", exist_ok=True)
+os.makedirs("temp/", exist_ok=True)
 
 start_time = time.time()
 
