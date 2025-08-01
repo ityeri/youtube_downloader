@@ -1,3 +1,5 @@
+텅그리야 여긴 여는거 아니다 이파일 안쓰는 구버전? 암튼 무쓸모 파일임
+
 import os
 import traceback
 
