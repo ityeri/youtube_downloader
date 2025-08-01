@@ -18,6 +18,10 @@ https://youtu.be/RqpJXlSWZyM
 
 다시보기 없이
 
+# TODO
+* 솧요시간 안뜸 (is_done 똑바로 안되는)
+* 유실 리트
+
 `sudo apt install ffmpeg`
 `sudo apt install ffmpeg`
 `sudo apt install ffmpeg`
