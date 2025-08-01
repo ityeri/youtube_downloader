@@ -8,7 +8,9 @@ import re
 import time
 from datetime import timedelta
 
-from config import urls
+from config import video_ids
+from utils import get_video_url
+
 
 def get_resolution(stream: Stream) -> int:
     if not stream.resolution:
@@ -23,7 +25,6 @@ def get_audio_bitrate(stream: Stream) -> int:
         return int(stream.abr.replace("kbps", ""))
 
 def sanitize_filename(name: str) -> str:
-    # Windows 금지 문자 제거
     name = re.sub(r'[\\/*?:"<>|]', '_', name)
     return name
 
@@ -39,16 +40,16 @@ def merge_video_audio(video_path, audio_path, output_path):
         .run()
     )
 
-print(urls)
+print(video_ids)
 
 os.makedirs("downloads/", exist_ok=True)
 os.makedirs("temp/", exist_ok=True)
 
 start_time = time.time()
 
-for i, url in enumerate(urls):
+for i, video_id in enumerate(video_ids):
 
-    print(f"{len(urls)}개 중 {i + 1}번째 영상 시작")
+    print(f"{len(video_ids)}개 중 {i + 1}번째 영상 시작")
 
     is_complete = False
 
@@ -59,7 +60,7 @@ for i, url in enumerate(urls):
         try:
 
             print("영상 정보 가져오는중")
-            yt = YouTube(url, "WEB", on_progress_callback=on_progress)
+            yt = YouTube(get_video_url(video_id), "WEB", on_progress_callback=on_progress)
             print(f"영상 제목: {yt.title}")
 
             print("비디오 스트림 다운로드...")
@@ -92,9 +93,9 @@ for i, url in enumerate(urls):
         if is_complete: break
 
     if is_complete:
-        print(f"{len(urls)}개 중 {i + 1}번째 영상 성공")
+        print(f"{len(video_ids)}개 중 {i + 1}번째 영상 성공")
     else:
-        print(f"{len(urls)}개 중 {i + 1}번째 영상 실패")
+        print(f"{len(video_ids)}개 중 {i + 1}번째 영상 실패")
 
     print()
 
@@ -102,4 +103,4 @@ end_time = time.time()
 
 time_elapsed = end_time - start_time
 
-print(f"{len(urls)}개 전체 완료. 총 소요시간: {str(timedelta(seconds=time_elapsed))}")
+print(f"{len(video_ids)}개 전체 완료. 총 소요시간: {str(timedelta(seconds=time_elapsed))}")
